@@ -13,6 +13,7 @@ mod memory_set;
 mod page_table;
 
 use address::VPNRange;
+pub use crate::mm::memory_set::MapArea;
 pub use address::{PhysAddr, PhysPageNum, StepByOne, VirtAddr, VirtPageNum};
 pub use frame_allocator::{frame_alloc, frame_dealloc, FrameTracker};
 pub use memory_set::remap_test;

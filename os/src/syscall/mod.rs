@@ -51,7 +51,9 @@ const SYSCALL_SPAWN: usize = 400;
 
 mod fs;
 mod process;
+mod util;
 
+use util::*;
 use fs::*;
 use process::*;
 
