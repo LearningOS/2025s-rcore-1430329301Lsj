@@ -15,6 +15,12 @@ use alloc::vec;
 use alloc::vec::Vec;
 use core::cell::RefMut;
 
+#[allow(unused)]
+use alloc::collections::{BTreeSet, BTreeMap};
+
+/// 默认死锁检测为关闭：
+const HEKE_DEFAULT_EDD: bool = false;
+
 /// Process Control Block
 pub struct ProcessControlBlock {
     /// immutable
@@ -49,6 +55,12 @@ pub struct ProcessControlBlockInner {
     pub semaphore_list: Vec<Option<Arc<Semaphore>>>,
     /// condvar list
     pub condvar_list: Vec<Option<Arc<Condvar>>>,
+    /// 增加是否启用死锁检测
+    pub enable_deadlock_detect: bool,
+    /// 增加mutex的死锁检测
+    pub mutex_set: BTreeSet<usize>,
+    /// 增加semap的死锁检测
+    pub semap_map: BTreeMap<usize, usize>,
 }
 
 impl ProcessControlBlockInner {
@@ -119,6 +131,9 @@ impl ProcessControlBlock {
                     mutex_list: Vec::new(),
                     semaphore_list: Vec::new(),
                     condvar_list: Vec::new(),
+                    enable_deadlock_detect: HEKE_DEFAULT_EDD,
+                    mutex_set: BTreeSet::new(),
+                    semap_map: BTreeMap::new(),
                 })
             },
         });
@@ -245,6 +260,9 @@ impl ProcessControlBlock {
                     mutex_list: Vec::new(),
                     semaphore_list: Vec::new(),
                     condvar_list: Vec::new(),
+                    enable_deadlock_detect: HEKE_DEFAULT_EDD,
+                    mutex_set: BTreeSet::new(),
+                    semap_map: BTreeMap::new(),
                 })
             },
         });
